@@ -1,0 +1,14 @@
+use('biblioteca');
+// db.AUTOR.insertOne({
+//     nombre: 'Gabriel Garcia Marquez'
+// })
+
+ 
+
+db.LIBRO.insertOne({
+    titulo: 'Cien años de soledad',
+    ISBN: 9780060114183,
+    año: 1967,
+    idioma: 'Español',
+    autor: autor.id
+})
