@@ -48,7 +48,7 @@ export async function actualizarPrestamo(numero, nuevosDatos) {
     const usuario = await db.collection("USUARIO").findOne({ nombre: nuevosDatos.usuario });
 
     if (!usuario) {
-      console.log(`❌ No se encontró un usuario con el nombre "${nuevosDatos.usuario}".`);
+      console.log(`No se encontró un usuario con el nombre "${nuevosDatos.usuario}".`);
       return;
     }
 

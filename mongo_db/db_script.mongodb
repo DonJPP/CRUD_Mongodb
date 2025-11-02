@@ -1,3 +1,4 @@
+// en este script se crea la base de datos y las distintas colecciones
 use('biblioteca');
 db.createCollection('AUTOR')
 db.createCollection('LIBRO')
@@ -5,6 +6,7 @@ db.createCollection('USUARIO')
 db.createCollection('PRESTAMO')
 db.createCollection('COPIA')
 
+// en estos runcommand, se establecen datos necesarios a la hora de añadir un documento a la base de datos
 db.runCommand({
     collMod: 'AUTOR',
     validator: {
@@ -12,7 +14,7 @@ db.runCommand({
             bsonType: "object",
             required: ['nombre'],
             properties: {
-                nombre: {bsonType:'string'}
+                nombre: {bsonType:'string'} // en este caso, para aun autor, si o si se tiene que añadir un nombre de autor , el dato es de tipo string
             } 
         }
     }    
@@ -23,18 +25,13 @@ db.runCommand({
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ['titulo','ISBN','año','idioma','autores'],
+            required: ['titulo','ISBN','año','idioma','autor'],
             properties: {
                 titulo: {bsonType:'string'},
                 ISBN: {bsonType:'int'},
                 año: {bsonType:'int'},
                 idioma: {bsonType:'string'},
-                autores: {
-                    bsonType:'array',
-                    items: {bsonType:'objectId'
-                    },
-                    description: "Lista de autor/autores"
-                }
+                autor: {bsonType:'objectId'} // en este caso para libro, se agrega un titulo, isbn, año,idioma y autor, si hace falta alguna de esta información, la insercion del documento no sera exitosa
             } 
         }
     }    
@@ -59,9 +56,10 @@ db.runCommand({
     validator: {
         $jsonSchema: {
             bsonType: "object",
-            required: ['fecha_prestamo'],
+            required: ['fecha_prestamo','idprestamo'],
             properties: {
-                fecha_prestamo: {bsonType:'date'}
+                fecha_prestamo: {bsonType:'date'},
+                idprestamo: {bsonType:'int'}
             } 
         }
     }    

@@ -18,11 +18,11 @@ export async function insertarLibro(libro) {
     ISBN: libro.ISBN,
     año: libro.año,
     idioma: libro.idioma,
-    autor: autor._id // referencia al autor
+    autor: autor._id, // referencia al autor
   };
 
   await db.collection("LIBRO").insertOne(nuevoLibro);
-  console.log("✅ Libro insertado correctamente.");
+  console.log("Libro insertado correctamente.");
 }
 
 /**
@@ -33,21 +33,21 @@ export async function actualizarLibro(ISBN, nuevosDatos) {
 
   const libro = await db.collection("LIBRO").findOne({ ISBN });
   if (!libro) {
-    console.log("❌ No se encontró un libro con ese ISBN.");
+    console.log(" No se encontró un libro con ese ISBN.");
     return;
   }
 
   // Si el usuario desea cambiar el autor
-  if (nuevosDatos.autorNombre) {
-    const autor = await db.collection("AUTOR").findOne({ nombre: nuevosDatos.autorNombre });
+  if (nuevosDatos.autor) {
+    const autor = await db.collection("AUTOR").findOne({ nombre: nuevosDatos.autor });
 
     if (!autor) {
-      console.log(`❌ No se pudo actualizar el libro. No existe un autor con el nombre "${nuevosDatos.autorNombre}".`);
+      console.log(` No se pudo actualizar el libro. No existe un autor con el nombre "${nuevosDatos.autor}".`);
       return;
     }
 
     nuevosDatos.autor = autor._id;
-    delete nuevosDatos.autorNombre; // limpiamos el campo auxiliar
+    delete nuevosDatos.autor; // limpiamos el campo auxiliar
   }
 
   await db.collection("LIBRO").updateOne(
@@ -55,7 +55,7 @@ export async function actualizarLibro(ISBN, nuevosDatos) {
     { $set: nuevosDatos }
   );
 
-  console.log("✅ Libro actualizado correctamente.");
+  console.log(" Libro actualizado correctamente.");
 }
 
 /**
@@ -66,11 +66,11 @@ export async function eliminarLibro(ISBN) {
   const libro = await db.collection("LIBRO").findOne({ ISBN });
 
   if (!libro) {
-    console.log("❌ No se encontró un libro con ese ISBN.");
+    console.log(" No se encontró un libro con ese ISBN.");
     return;
   }
 
   await db.collection("LIBRO").deleteOne({ _id: libro._id });
-  console.log("🗑️ Libro eliminado correctamente.");
+  console.log(" Libro eliminado correctamente.");
 }
 
