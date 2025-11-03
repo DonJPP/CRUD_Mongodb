@@ -1,0 +1,40 @@
+//En este script se llena la base de datos con datos iniciales
+
+use('biblioteca'); // Use biblioteca indica en que base de datos se va a trabajar, en caso de que no exista, mongo la crea 
+
+db.AUTOR.insertOne({
+    nombre: 'Gabriel Garcia Marquez'
+}) // se inserta un autor en la colección autor, y asi en todas las colecciones
+
+const autorid = db.AUTOR.findOne({nombre: 'Gabriel Garcia Marquez'})
+
+
+db.LIBRO.insertOne({
+  titulo: 'Cien años de soledad',
+  ISBN: NumberInt(9780060114183),
+  año: NumberInt(1967),
+  idioma: 'Español',
+  autor: autorid._id
+})
+
+const libro = db.LIBRO.findOne({titulo: 'Cien años de soledad'})
+
+
+db.COPIA.insertOne({
+    numero: NumberInt(1),
+    libro: libro._id
+})
+
+db.USUARIO.insertOne({
+    RUT : NumberInt(0),
+    nombre : 'Donald'
+})
+
+const user = db.USUARIO.findOne({nombre: 'Donald'})
+
+db.PRESTAMO.insertOne({
+    fecha_prestamo : new Date('2025-26-10'),
+    idprestamo: NumberInt(1),
+    usuario : user._id,
+    fecha_devolucion: new Date('2025-31-10')    
+})
